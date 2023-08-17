@@ -1,0 +1,1 @@
+SELECT * FROM banco_de_dado_loja.usuarios;

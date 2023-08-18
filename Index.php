@@ -8,8 +8,22 @@ if((!isset($_SESSION['email']) == true)and(!isset($_SESSION['senha'])==true))
    unset($_SESSION['senha']); 
     header('Location: Login.php');
 
+
 }else{
-$logado = $_SESSION['email'];
+    include_once('config.php');
+$email = $_SESSION['email'];
+
+    $sql = "SELECT nome FROM usuarios WHERE email = $email";
+    $result = $conexao->query($sql);
+ print_r($sql);
+  print_r('<br>');
+  print_r($result); 
+    if(mysqli_num_rows($result)>0){
+echo "nome encontrado";
+    }else{
+        echo "não encontrado";
+    }
+
 }
 
 ?>
@@ -25,7 +39,7 @@ $logado = $_SESSION['email'];
 <body>
     <h1>BEM VINDO AO NOSSO SITE</h1>
     <?php
-    echo "<h1>Você Logou com: <u>$logado</u></h1>"
+    echo "<h1>Você Logou com: <u>$email</u></h1>"
     ?>
 <div class="sair">
     <a style="color:white" href="Sair.php">Sair</a>

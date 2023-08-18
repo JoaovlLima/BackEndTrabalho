@@ -1,18 +1,9 @@
 <?php
+$senhasDiferente = false;
 if(isset($_POST['submit']))
 {
   include_once('config.php');
-  /* print_r('nome: '.$_POST['nome']);
-  print_r("<br>");
-  print_r('Sobrenome: '.$_POST['sobrenome']);
-  print_r("<br>");
-  print_r('Email: '.$_POST['email']);
-  print_r("<br>");
-  print_r('telefone: '.$_POST['telefone']);
-  print_r("<br>");
-  print_r('CEP: '.$_POST['cep']);
-  print_r("<br>");
-  print_r('Endereço: '.$_POST['endereco']); */
+  
   $nome = $_POST['nome'];
   $sobrenome = $_POST['sobrenome'];
   $email= $_POST['email'];
@@ -32,11 +23,14 @@ if(isset($_POST['submit']))
 if(mysqli_num_rows($result)<1){
 
   if($senha == $confirmeSenha){
+$senhasDiferente= false;
 
 $result =mysqli_query($conexao, "INSERT INTO usuarios(nome,sobrenome,email,senha,telefone,cep,endereco) 
 VALUES('$nome','$sobrenome','$email','$senha','$telefone','$cep','$endereco')");
 }else{
-echo "Senhas Diferentes";
+  
+
+$senhasDiferente = true;
 }
 }else{
 echo"Email já registrado";
@@ -52,9 +46,19 @@ echo"Email já registrado";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Style.css">
 </head>
 <body>
+  
+<script>
+    <?php if ($senhasDiferente) { ?>
+        window.addEventListener('DOMContentLoaded', function() {
+            ativarPopUp();
+        });
+    <?php } ?>
+</script>
+  <div class="camada1">
+    <div class="embaca" id="fundoEmbaca">
     <div class="container">
         <h2>Cadastro</h2>
         <br><br>
@@ -77,7 +81,20 @@ echo"Email já registrado";
           <br><br>
           <input type="submit" value="Cadastrar" id="submit" name="submit">
         </form>
+       <button class="ativarPopUp" onclick="ativarPopUp()">Ativar
+      </button>
+
       </div>
+      </div>
+      </div>
+      <!-- camada 2 -->
+      
+      <div class="popUpSenha" id="popUp">
+
+<h1>Senha Diferentes</h1>
+
+      </div>
+      
 </body>
 <script src="Script.js"></script>
 </html>
